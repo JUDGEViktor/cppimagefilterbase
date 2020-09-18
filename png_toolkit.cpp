@@ -4,9 +4,7 @@
 #include "stb_image_write.h"
 #include "png_toolkit.h"
 
-png_toolkit::png_toolkit()
-{
-}
+png_toolkit::png_toolkit() {}
 
 png_toolkit::~png_toolkit()
 {

@@ -1,14 +1,12 @@
 #ifndef PNG_TOOLKIT_H
 #define PNG_TOOLKIT_H
 
-#include <string>
-#include <map>
-//#include <memory>
+#include "Libraries.h"
 #include "stb_image.h"
 
 struct image_data
 {
-    stbi_uc *pixels;
+    stbi_uc* pixels;
     int w, h;
     int compPerPixel;
 };

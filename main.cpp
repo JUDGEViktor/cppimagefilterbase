@@ -1,5 +1,6 @@
 #include <iostream>
-#include "png_toolkit.h"
+//#include "png_toolkit.h"
+#include "Manager.h"
 
 int main( int argc, char *argv[] )
 {
@@ -7,12 +8,15 @@ int main( int argc, char *argv[] )
     // toolkit near test images!
     try
     {
-        if (argc != 3)
+        if (argc != 4)
             throw "Not enough arguments";
 
-        png_toolkit studTool;
-        studTool.load(argv[1]);
-        studTool.save(argv[2]);
+        Manager manager;
+       /* std::string config = "config.txt";
+        std::string input = "flower.jpg";
+        std::string output = "output.jpg";*/
+        manager.run(argv[1], argv[2], argv[3]);
+        
 
     }
     catch (const char *str)
