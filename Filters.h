@@ -8,10 +8,7 @@ struct active_rectangle {
 
 enum class filters_type {
 	blackWhite,
-	red,
-	treshold,
-	blur,
-	edge
+	red
 };
 
 
