@@ -2,7 +2,7 @@
 
 filters_map filters = {
 	{"blackWhite", filters_type::blackWhite},
-	{"Red", filters_type::red}
+	{"Red1", filters_type::red}
 };
 
 
