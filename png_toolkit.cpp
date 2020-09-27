@@ -46,5 +46,5 @@ image_data image_data::DeepCopy() {
 }
 
 void image_data::FreePixels() {
-    delete[] pixels;
+    stbi_image_free(pixels);
 }
