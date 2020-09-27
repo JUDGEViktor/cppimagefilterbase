@@ -18,7 +18,7 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
-				res.push_back(p[colors::R]);
+				res.push_back(*p);
 			}
 		}
 	}
@@ -59,9 +59,9 @@ void BlackWhiteFilter::Apply(image_data& pictureData) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel 
 				+ x * pictureData.compPerPixel;
 			val = (uint8_t)0.3 * p[colors::R] + 0.6 * p[colors::G] + 1.0 * p[colors::B];
-			p[colors::R] = val;
-			p[colors::G] = val;
-			p[colors::B] = val;
+			*p = val;
+			*(p+1) = val;
+			*(p+2) = val;
 		}
 	}
 	return;
@@ -72,9 +72,9 @@ void RedFilter::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			p[colors::R] = 255;
-			p[colors::G] = 0;
-			p[colors::B] = 0;
+			*p = 255;
+			*(p+1) = 0;
+			*(p+2) = 0;
 		}
 	}
 	return;
@@ -88,9 +88,9 @@ void Treshold::Apply(image_data& pictureData) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			if (p[colors::R] < medValue) {
-				p[colors::R] = 0;
-				p[colors::G] = 0;
-				p[colors::B] = 0;
+				*p = 0;
+				*(p+1) = 0;
+				*(p+2) = 0;
 			}
 		}
 	}
