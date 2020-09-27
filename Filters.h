@@ -28,13 +28,11 @@ class Filter {
 
 private:
 
-	bool IsInActiveArea(int x, int y);
-
 protected:
 
 	active_rectangle activeArea;
 
-	int GetMedianValueInBox(int x, int y, int radius, image_data& pictureData);
+	bool IsInActiveArea(int x, int y);
 
 public:
 
@@ -82,6 +80,10 @@ public:
 
 
 class Treshold : public Filter {
+
+private:
+
+	int GetMedianValueInBox(int x, int y, int radius, image_data& pictureData);
 
 public:
 

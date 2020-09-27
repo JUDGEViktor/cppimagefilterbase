@@ -10,24 +10,6 @@ bool Filter::IsInActiveArea(int x, int y) {
 	return(x >= activeArea.leftColumn && x <= activeArea.rightColumn && y >= activeArea.upperLine && y <= activeArea.bottomLine);
 }
 
-int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
-	std::vector<stbi_uc> buff;
-
-	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
-		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
-			if (IsInActiveArea(x, y)) {
-				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
-					+ x * pictureData.compPerPixel;
-				buff.push_back((uint8_t)p[colors::R]);
-			}
-		}
-	}
-
-	std::sort(buff.begin(), buff.end());
-
-	return buff[buff.size() / 2];
-}
-
 
 Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, image_data& imageData) {
 	auto necessaryFilter = filters.find(filterName);
@@ -95,4 +77,22 @@ void Treshold::Apply(image_data& pictureData) {
 	}
 
 	return;
+}
+
+int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
+	std::vector<stbi_uc> buff;
+
+	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
+		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
+			if (IsInActiveArea(x, y)) {
+				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
+					+ x * pictureData.compPerPixel;
+				buff.push_back((uint8_t)p[colors::R]);
+			}
+		}
+	}
+
+	std::sort(buff.begin(), buff.end());
+
+	return buff[buff.size() / 2];
 }
