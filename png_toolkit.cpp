@@ -45,6 +45,6 @@ image_data image_data::DeepCopy() {
     return copy;
 }
 
-void image_data::freePixels() {
+void image_data::FreePixels() {
     delete[] pixels;
 }
