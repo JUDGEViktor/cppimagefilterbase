@@ -11,7 +11,7 @@ bool Filter::IsInActiveArea(int x, int y) {
 }
 
 int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
-	std::vector<int> buff;
+	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
 		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
@@ -22,9 +22,9 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 			}
 		}
 	}
-	if (!buff.empty()) {
-		std::sort(buff.begin(), buff.end());
-	}
+
+	std::sort(buff.begin(), buff.end());
+
 	return buff[buff.size() / 2];
 }
 
