@@ -9,8 +9,8 @@ struct image_data{
     int w, h;
     int compPerPixel;
 
-    //image_data DeepCopy();
-    //void FreePixels();
+    image_data DeepCopy();
+    void FreePixels();
 };
 
 class png_toolkit{
