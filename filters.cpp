@@ -77,7 +77,6 @@ void Treshold::Apply(image_data& pictureData) {
 			}
 		}
 	}
-	blw.~BlackWhiteFilter();
 	copiedPictureData.FreePixels();
 
 	return;
@@ -96,9 +95,7 @@ int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_da
 		}
 	}
 
-	std::sort(buff.begin(), buff.end(), [](stbi_uc a, stbi_uc b) {
-		return a > b;
-		});
+	std::sort(buff.begin(), buff.end());
 
 	return buff[buff.size() / 2];
 }
