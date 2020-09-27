@@ -18,9 +18,9 @@ void Manager::parseFile(char* fileConfigName) {
 	}
 }
 
-void Manager::initFilters() {
+void Manager::initFilters(png_toolkit& const image) {
 	for (auto i = 0; i < filterAndArea.size(); i++) {
-		filters.push_back(Filter::Create(filterAndArea[i].first, filterAndArea[i].second));
+		filters.push_back(Filter::Create(filterAndArea[i].first, filterAndArea[i].second, image));
 	}
 }
 
@@ -28,12 +28,12 @@ void Manager::run(char* fileConfigName, char* fileInputName, char* fileOutputNam
 	png_toolkit picture;
 	picture.load(fileInputName);
 	parseFile(fileConfigName);
-	initFilters();
+	initFilters(picture);
 
-	image_data pixels = picture.getPixelData();
+	image_data imageData = picture.getPixelData();
 	for (auto filter : filters) {
 		if (filter != NULL) {
-			filter->apply(pixels);
+			filter->Apply(imageData);
 		}
 	}
 

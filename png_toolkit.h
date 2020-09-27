@@ -4,15 +4,18 @@
 #include "Libraries.h"
 #include "stb_image.h"
 
-struct image_data
-{
+struct image_data{
     stbi_uc* pixels;
     int w, h;
     int compPerPixel;
 };
 
-class png_toolkit
-{
+class png_toolkit{
+
+private:    
+
+    image_data imgData;
+
 public:
     enum class Error {
         WrongSize,
@@ -26,8 +29,6 @@ public:
     bool save( std::string const &pictureName );
     image_data getPixelData( void ) const;
 
-private:
-    image_data imgData;
 };
 
 #endif // PNG_TOOLKIT_H

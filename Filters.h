@@ -2,11 +2,11 @@
 #include "Libraries.h"
 #include "png_toolkit.h"
 
-// enum colors {
-// 	R,
-// 	G,
-// 	B
-// };
+enum colors {
+	R,
+	G,
+	B
+};
 
 struct active_rectangle {
 	int upperLine, leftColumn, bottomLine, rightColumn;

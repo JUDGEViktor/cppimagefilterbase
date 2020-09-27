@@ -18,7 +18,7 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
-				res.push_back(*p);
+				res.push_back(p[colors::R]);
 			}
 		}
 	}
@@ -44,9 +44,9 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, png
 			return new BlackWhiteFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::red):
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
-// 		case (filters_type::treshold):
-// 			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);
-// 		}
+		case (filters_type::treshold):
+			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);
+		}
 	}
 	return NULL;
 }
@@ -59,9 +59,9 @@ void BlackWhiteFilter::Apply(image_data& pictureData) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel 
 				+ x * pictureData.compPerPixel;
 			val = (uint8_t)0.3 * p[colors::R] + 0.6 * p[colors::G] + 1.0 * p[colors::B];
-			*p = val;
-			*(p+1) = val;
-			*(p+2) = val;
+			p[colors::R] = val;
+			p[colors::G] = val;
+			p[colors::B] = val;
 		}
 	}
 	return;
@@ -72,9 +72,9 @@ void RedFilter::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			*p = 255;
-			*(p+1) = 0;
-			*(p+2) = 0;
+			p[colors::R] = 255;
+			p[colors::G] = 0;
+			p[colors::B] = 0;
 		}
 	}
 	return;
@@ -88,9 +88,9 @@ void Treshold::Apply(image_data& pictureData) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			if (p[colors::R] < medValue) {
-				*p = 0;
-				*(p+1) = 0;
-				*(p+2) = 0;
+				p[colors::R] = 0;
+				p[colors::G] = 0;
+				p[colors::B] = 0;
 			}
 		}
 	}
