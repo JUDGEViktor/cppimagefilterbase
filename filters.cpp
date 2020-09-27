@@ -11,19 +11,21 @@ bool Filter::IsInActiveArea(int x, int y) {
 }
 
 int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
-	std::vector<int> res;
+	std::vector<int> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
 		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
-				res.push_back(p[colors::R]);
+				buff.push_back(p[colors::R]);
 			}
 		}
 	}
-	std::sort(res.begin(), res.end());
-	return res[res.size() / 2];
+	std::sort(buff.begin(), buff.end());
+	int res = buff[buff.size() / 2];
+	buff.clear();
+	return res;
 
 }
 
