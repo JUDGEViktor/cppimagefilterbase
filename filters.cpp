@@ -95,9 +95,9 @@ int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_da
 		}
 	}
 
-	std::sort(buff.begin(), buff.end(), [](stbi_uc a, stbi_uc b) {
+	/*std::sort(buff.begin(), buff.end(), [](stbi_uc a, stbi_uc b) {
 		return a > b;
-		});
+		});*/
 
 	return buff[buff.size() / 2];
 }
