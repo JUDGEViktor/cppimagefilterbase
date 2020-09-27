@@ -63,10 +63,30 @@ void RedFilter::Apply(image_data& pictureData) {
 
 void Treshold::Apply(image_data& pictureData) {
 	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
-	image_data copiedPictureData = pictureData.DeepCopy();
+	image_data copy;
+	copy.h = pictureData.h;
+	copy.w = pictureData.w;
+	copy.compPerPixel = pictureData.compPerPixel;
+
+	int numElem = 0;
+	size_t size = pictureData.w * pictureData.h * pictureData.compPerPixel;
+	copy.pixels = new stbi_uc[size];
+	for (int i = activeArea.upperLine; i < activeArea.bottomLine; i++) {
+		int y = i * pictureData.w * pictureData.compPerPixel;
+		for (int j = activeArea.leftColumn; j < activeArea.rightColumn; j++) {
+			int x = y + j * pictureData.compPerPixel;
+			for (int k = 0; k < pictureData.compPerPixel; k++) {
+				copy.pixels[numElem] = pictureData.pixels[x + k];
+				numElem++;
+			}
+		}
+	}
+
+
+	//image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-			int medValue = GetMedianValueInBox(x, y, 2, copiedPictureData);
+			int medValue = GetMedianValueInBox(x, y, 2, copy);
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			if (p[colors::R] < medValue) {
@@ -77,7 +97,8 @@ void Treshold::Apply(image_data& pictureData) {
 		}
 	}
 
-	copiedPictureData.FreePixels();
+	delete[] copy.pixels;
+	//copiedPictureData.FreePixels();
 
 	return;
 }
