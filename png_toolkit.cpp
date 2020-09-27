@@ -26,25 +26,25 @@ bool png_toolkit::save( const std::string &pictureName )
 }
 
 
-//image_data png_toolkit::getPixelData( void ) const
-//{
-//    return imgData;
-//}
-//
-//
-//image_data image_data::DeepCopy() {
-//    image_data copy;
-//    copy.h = h;
-//    copy.w = w;
-//    copy.compPerPixel = compPerPixel;
-//
-//    size_t size = w * h * compPerPixel;
-//    copy.pixels = new stbi_uc[size];
-//    memcpy(copy.pixels, pixels, size);
-//
-//    return copy;
-//}
-//
-//void image_data::FreePixels() {
-//    delete[] pixels;
-//}
+image_data png_toolkit::getPixelData( void ) const
+{
+    return imgData;
+}
+
+
+image_data image_data::DeepCopy() {
+    image_data copy;
+    copy.h = h;
+    copy.w = w;
+    copy.compPerPixel = compPerPixel;
+
+    size_t size = w * h * compPerPixel;
+    copy.pixels = new stbi_uc[size];
+    memcpy(copy.pixels, pixels, size);
+
+    return copy;
+}
+
+void image_data::FreePixels() {
+    delete[] pixels;
+}

@@ -79,17 +79,17 @@ public:
 };
 
 
-//class Treshold : public Filter {
-//
-//private:
-//
-//	int GetMedianValueInBox(int x, int y, int radius, image_data& const pictureData);
-//
-//public:
-//
-//	Treshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
-//
-//	~Treshold() {}
-//
-//	void Apply(image_data& pictureData);
-//};
+class Treshold : public Filter {
+
+private:
+
+	int GetMedianValueInBox(int x, int y, int radius, image_data& const pictureData);
+
+public:
+
+	Treshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
+
+	~Treshold() {}
+
+	void Apply(image_data& pictureData);
+};
