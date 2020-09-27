@@ -18,7 +18,7 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
-				buff.push_back(p[colors::R]);
+				buff.push_back((uint8_t)p[colors::R]);
 			}
 		}
 	}
