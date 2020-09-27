@@ -15,6 +15,8 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
 		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
+			if (x == xCentre && y == yCentre)
+				continue;
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
