@@ -18,7 +18,7 @@ void Manager::parseFile(char* fileConfigName) {
 	}
 }
 
-void Manager::initFilters(image_data& const imageData) {
+void Manager::initFilters(image_data& imageData) {
 	for (auto i = 0; i < filterAndArea.size(); i++) {
 		filters.push_back(Filter::Create(filterAndArea[i].first, filterAndArea[i].second, imageData));
 	}
