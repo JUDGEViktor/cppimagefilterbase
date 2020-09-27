@@ -30,3 +30,4 @@ image_data png_toolkit::getPixelData( void ) const
 {
     return imgData;
 }
+

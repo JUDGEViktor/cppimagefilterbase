@@ -14,7 +14,7 @@ private:
 
 	void parseFile(char* fileConfigName);
 
-	void initFilters(png_toolkit& const pictureData);
+	void initFilters(image_data& imageData);
 
 
 public:

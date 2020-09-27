@@ -28,6 +28,7 @@ public:
     bool load( std::string const &pictureName );
     bool save( std::string const &pictureName );
     image_data getPixelData( void ) const;
+    void freePixels();
 
 };
 

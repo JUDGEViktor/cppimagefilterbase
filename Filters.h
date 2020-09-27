@@ -39,7 +39,7 @@ protected:
 public:
 
 	//virtual constructor
-	static Filter* Create(std::string filterName, std::vector<int> coordinates, png_toolkit& const image);
+	static Filter* Create(std::string filterName, std::vector<int> coordinates, image_data& imageData);
 
 	Filter(int U, int L, int B, int R) {
 		activeArea.upperLine = U;
