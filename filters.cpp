@@ -22,11 +22,10 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 			}
 		}
 	}
-	std::sort(buff.begin(), buff.end());
-	int res = buff[buff.size() / 2];
-	buff.clear();
-	return res;
-
+	if (!buff.empty()) {
+		std::sort(buff.begin(), buff.end());
+	}
+	return buff[buff.size() / 2];
 }
 
 
