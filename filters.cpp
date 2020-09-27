@@ -22,7 +22,7 @@ int Filter::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data
 			}
 		}
 	}
-	//std::sort(res.begin(), res.end());
+	std::sort(res.begin(), res.end());
 	return res[res.size() / 2];
 
 }
