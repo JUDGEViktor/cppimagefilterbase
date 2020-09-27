@@ -8,6 +8,9 @@ struct image_data{
     stbi_uc* pixels;
     int w, h;
     int compPerPixel;
+
+    image_data DeepCopy();
+    void freePixels();
 };
 
 class png_toolkit{
@@ -28,7 +31,6 @@ public:
     bool load( std::string const &pictureName );
     bool save( std::string const &pictureName );
     image_data getPixelData( void ) const;
-    void freePixels();
 
 };
 

@@ -62,10 +62,11 @@ void RedFilter::Apply(image_data& pictureData) {
 }
 
 void Treshold::Apply(image_data& pictureData) {
+	image_data copiedPicturedata = pictureData.DeepCopy();
 	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-			int medValue = GetMedianValueInBox(x, y, 2, pictureData);
+			int medValue = GetMedianValueInBox(x, y, 2, copiedPicturedata);
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			if (p[colors::R] < medValue) {
@@ -75,6 +76,8 @@ void Treshold::Apply(image_data& pictureData) {
 			}
 		}
 	}
+
+	copiedPicturedata.freePixels();
 
 	return;
 }
