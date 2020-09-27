@@ -25,8 +25,8 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, ima
 			return new BlackWhiteFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::red):
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
-		/*case (filters_type::treshold):
-			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);*/
+		case (filters_type::treshold):
+			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);
 		}
 	}
 	return NULL;
@@ -62,8 +62,7 @@ void RedFilter::Apply(image_data& pictureData) {
 }
 
 void Treshold::Apply(image_data& pictureData) {
-	BlackWhiteFilter blw = BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn);
-	blw.Apply(pictureData);
+	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
 	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
