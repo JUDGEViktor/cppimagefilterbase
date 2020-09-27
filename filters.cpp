@@ -39,7 +39,7 @@ void BlackWhiteFilter::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			val = (uint8_t)0.3 * p[colors::R] + 0.6 * p[colors::G] + 1.0 * p[colors::B];
+			val = stbi_uc(int((3 * p[colors::R] + 6 * p[colors::G] + 1 * p[colors::B]) / 10));
 			p[colors::R] = val;
 			p[colors::G] = val;
 			p[colors::B] = val;
