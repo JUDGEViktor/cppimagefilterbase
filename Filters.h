@@ -2,13 +2,22 @@
 #include "Libraries.h"
 #include "png_toolkit.h"
 
+enum colors {
+	R,
+	G,
+	B
+};
+
 struct active_rectangle {
-	int yUpper, xLeft, yBottom, xRight;
+	int upperLine, leftColumn, bottomLine, rightColumn;
 };
 
 enum class filters_type {
 	blackWhite,
-	red
+	red,
+	treshold,
+	blur,
+	edge
 };
 
 
@@ -19,31 +28,34 @@ class Filter {
 
 private:
 
-public:
-
-	//virtual constructor
-	static Filter* Create(std::string filterName, std::vector<int> coordinates);
-
-	Filter(int U, int L, int B, int R) {
-		activeArea.yUpper = U;
-		activeArea.xLeft = L;
-		activeArea.yBottom = B;
-		activeArea.xRight = R;
-	}
-	virtual ~Filter() {}
-
-	virtual void apply(image_data& pictureData) = 0;
+	bool IsInActiveArea(int x, int y);
 
 protected:
 
 	active_rectangle activeArea;
+
+	int GetMedianValueInBox(int x, int y, int radius, image_data& pictureData);
+
+public:
+
+	//virtual constructor
+	static Filter* Create(std::string filterName, std::vector<int> coordinates, png_toolkit& const image);
+
+	Filter(int U, int L, int B, int R) {
+		activeArea.upperLine = U;
+		activeArea.leftColumn = L;
+		activeArea.bottomLine = B;
+		activeArea.rightColumn = R;
+	}
+	virtual ~Filter() {}
+
+	virtual void Apply(image_data& pictureData) = 0;
 
 };
 
 
 
 class BlackWhiteFilter : public Filter {
-private:
 
 public:
 
@@ -51,13 +63,12 @@ public:
 
 	~BlackWhiteFilter() {}
 
-	void apply(image_data& pictureData);
+	void Apply(image_data& pictureData);
 
 };
 
 
 class RedFilter : public Filter {
-private:
 
 public:
 
@@ -65,6 +76,18 @@ public:
 
 	~RedFilter() {}
 
-	void apply(image_data& pictureData);
+	void Apply(image_data& pictureData);
 
+};
+
+
+class Treshold : public Filter {
+
+public:
+
+	Treshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
+
+	~Treshold() {}
+
+	void Apply(image_data& pictureData);
 };
