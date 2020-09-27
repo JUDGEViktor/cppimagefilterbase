@@ -44,9 +44,9 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, png
 			return new BlackWhiteFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::red):
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
-		case (filters_type::treshold):
-			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);
-		}
+// 		case (filters_type::treshold):
+// 			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);
+// 		}
 	}
 	return NULL;
 }
