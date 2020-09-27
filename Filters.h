@@ -32,12 +32,12 @@ protected:
 
 	active_rectangle activeArea;
 
-	bool IsInActiveArea(int x, int y);
+	//bool IsInActiveArea(int x, int y);
 
 public:
 
 	//virtual constructor
-	static Filter* Create(std::string filterName, std::vector<int> coordinates, image_data& const imageData);
+	static Filter* Create(std::string filterName, std::vector<int> coordinates, image_data& imageData);
 
 	Filter(int U, int L, int B, int R) {
 		activeArea.upperLine = U;

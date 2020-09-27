@@ -6,12 +6,12 @@ filters_map filters = {
 	{"Treshold", filters_type::treshold}
 };
 
-bool Filter::IsInActiveArea(int x, int y) {
-	return(x >= activeArea.leftColumn && x <= activeArea.rightColumn && y >= activeArea.upperLine && y <= activeArea.bottomLine);
-}
+//bool Filter::IsInActiveArea(int x, int y) {
+//	return(x >= activeArea.leftColumn && x <= activeArea.rightColumn && y >= activeArea.upperLine && y <= activeArea.bottomLine);
+//}
 
 
-Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, image_data& const imageData) {
+Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, image_data& imageData) {
 	auto necessaryFilter = filters.find(filterName);
 
 	int upperLine = coordinates[0] == 0 ? 0 : imageData.h / coordinates[0];
