@@ -7,7 +7,7 @@ filters_map filters = {
 };
 
 bool Filter::IsInActiveArea(int x, int y) {
-	return(x >= activeArea.leftColumn && x <= activeArea.rightColumn && y >= activeArea.upperLine && y <= activeArea.bottomLine);
+	return(x > activeArea.leftColumn && x < activeArea.rightColumn && y > activeArea.upperLine && y < activeArea.bottomLine);
 }
 
 
@@ -68,7 +68,7 @@ void Treshold::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			int medValue = GetMedianValueInBox(x, y, 3, copiedPictureData);
+			int medValue = GetMedianValueInBox(x, y, 2, copiedPictureData);
 			if (p[colors::R] < medValue) {
 				p[colors::R] = 0;
 				p[colors::G] = 0;
@@ -84,8 +84,8 @@ void Treshold::Apply(image_data& pictureData) {
 int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
 	std::vector<stbi_uc> buff;
 
-	for (auto y = yCentre - radius; y < yCentre + radius; y++) {
-		for (auto x = xCentre - radius; x < xCentre + radius; x++) {
+	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
+		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
