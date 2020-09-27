@@ -62,11 +62,11 @@ void RedFilter::Apply(image_data& pictureData) {
 }
 
 void Treshold::Apply(image_data& pictureData) {
-	image_data copiedPicturedata = pictureData.DeepCopy();
+	image_data copiedPictureData = pictureData.DeepCopy();
 	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-			int medValue = GetMedianValueInBox(x, y, 2, copiedPicturedata);
+			int medValue = GetMedianValueInBox(x, y, 2, copiedPictureData);
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			if (p[colors::R] < medValue) {
@@ -77,12 +77,12 @@ void Treshold::Apply(image_data& pictureData) {
 		}
 	}
 
-	copiedPicturedata.freePixels();
+	copiedPictureData.freePixels();
 
 	return;
 }
 
-int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& const pictureData) {
+int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
 	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
