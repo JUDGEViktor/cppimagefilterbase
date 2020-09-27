@@ -87,12 +87,14 @@ int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_da
 			if (IsInActiveArea(x, y)) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
-				buff.push_back((uint8_t)p[colors::R]);
+				buff.push_back(p[colors::R]);
 			}
 		}
 	}
 
-	//std::sort(buff.begin(), buff.end());
+	std::sort(buff.begin(), buff.end(), [](stbi_uc a, stbi_uc b) {
+		return a > b;
+		});
 
 	return buff[buff.size() / 2];
 }
