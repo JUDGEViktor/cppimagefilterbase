@@ -11,7 +11,7 @@ bool Filter::IsInActiveArea(int x, int y) {
 }
 
 
-Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, image_data& imageData) {
+Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, image_data& const imageData) {
 	auto necessaryFilter = filters.find(filterName);
 
 	int upperLine = coordinates[0] == 0 ? 0 : imageData.h / coordinates[0];
@@ -63,30 +63,10 @@ void RedFilter::Apply(image_data& pictureData) {
 
 void Treshold::Apply(image_data& pictureData) {
 	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
-	image_data copy;
-	copy.h = pictureData.h;
-	copy.w = pictureData.w;
-	copy.compPerPixel = pictureData.compPerPixel;
-
-	int numElem = 0;
-	size_t size = pictureData.w * pictureData.h * pictureData.compPerPixel;
-	copy.pixels = new stbi_uc[size];
-	for (int i = activeArea.upperLine; i < activeArea.bottomLine; i++) {
-		int y = i * pictureData.w * pictureData.compPerPixel;
-		for (int j = activeArea.leftColumn; j < activeArea.rightColumn; j++) {
-			int x = y + j * pictureData.compPerPixel;
-			for (int k = 0; k < pictureData.compPerPixel; k++) {
-				copy.pixels[numElem] = pictureData.pixels[x + k];
-				numElem++;
-			}
-		}
-	}
-
-
-	//image_data copiedPictureData = pictureData.DeepCopy();
+	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-			int medValue = GetMedianValueInBox(x, y, 2, copy);
+			int medValue = GetMedianValueInBox(x, y, 2, copiedPictureData);
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			if (p[colors::R] < medValue) {
@@ -97,14 +77,13 @@ void Treshold::Apply(image_data& pictureData) {
 		}
 	}
 
-	delete[] copy.pixels;
-	//copiedPictureData.FreePixels();
+	copiedPictureData.FreePixels();
 
 	return;
 }
 
 int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
-	std::vector<int> buff;
+	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
 		for (auto x = xCentre - radius; x <= xCentre + radius; x++) {
@@ -116,6 +95,9 @@ int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_da
 		}
 	}
 
-	std::sort(buff.begin(), buff.end());
+	std::sort(buff.begin(), buff.end(), [](stbi_uc a, stbi_uc b) {
+		return a > b;
+		});
+
 	return buff[buff.size() / 2];
 }
