@@ -79,7 +79,7 @@ void Treshold::Apply(image_data& pictureData) {
 	return;
 }
 
-int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
+int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& const pictureData) {
 	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {

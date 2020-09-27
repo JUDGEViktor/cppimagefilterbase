@@ -83,7 +83,7 @@ class Treshold : public Filter {
 
 private:
 
-	int GetMedianValueInBox(int x, int y, int radius, image_data& pictureData);
+	int GetMedianValueInBox(int x, int y, int radius, image_data& const pictureData);
 
 public:
 
