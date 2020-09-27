@@ -62,7 +62,8 @@ void RedFilter::Apply(image_data& pictureData) {
 }
 
 void Treshold::Apply(image_data& pictureData) {
-	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
+	BlackWhiteFilter blw = BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn);
+	blw.Apply(pictureData);
 	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
@@ -76,7 +77,7 @@ void Treshold::Apply(image_data& pictureData) {
 			}
 		}
 	}
-
+	blw.~BlackWhiteFilter();
 	copiedPictureData.FreePixels();
 
 	return;
