@@ -32,7 +32,7 @@ protected:
 
 	active_rectangle activeArea;
 
-	//bool IsInActiveArea(int x, int y);
+	bool IsInActiveArea(int x, int y);
 
 public:
 
