@@ -88,36 +88,36 @@ public:
 };
 
 
-class Convolution : public Filter {
-
-protected:
-
-	Kernel kernel;
-
-public:
-
-	Convolution(int U, int L, int B, int R) : Filter(U, L, B, R), kernel({{ -1, -1, -1 },
-																		  { -1,  9, -1 },
-																		  { -1, -1, -1 }}) {}
-
-	~Convolution() {}
-
-	void Apply(image_data& pictureData) = 0;
-
-};
-
-
-class Edge : public Convolution {
-
-private:
-
-
-public:
-
-	Edge(int U, int L, int B, int R) : Convolution(U, L, B, R) {}
-
-	~Edge() {}
-
-	void Apply(image_data& pictureData);
-
-};
+//class Convolution : public Filter {
+//
+//protected:
+//
+//	Kernel kernel;
+//
+//public:
+//
+//	Convolution(int U, int L, int B, int R) : Filter(U, L, B, R), kernel({{ -1, -1, -1 },
+//																		  { -1,  9, -1 },
+//																		  { -1, -1, -1 }}) {}
+//
+//	~Convolution() {}
+//
+//	void Apply(image_data& pictureData) = 0;
+//
+//};
+//
+//
+//class Edge : public Convolution {
+//
+//private:
+//
+//
+//public:
+//
+//	Edge(int U, int L, int B, int R) : Convolution(U, L, B, R) {}
+//
+//	~Edge() {}
+//
+//	void Apply(image_data& pictureData);
+//
+//};

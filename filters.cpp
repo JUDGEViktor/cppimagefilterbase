@@ -28,8 +28,8 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, ima
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::threshold):
 			return new Threshold(upperLine, leftColumn, bottomLine, rightColumn);
-		case(filters_type::edge):
-			return new Edge(upperLine, leftColumn, bottomLine, rightColumn);
+		/*case(filters_type::edge):
+			return new Edge(upperLine, leftColumn, bottomLine, rightColumn);*/
 		}
 	}
 	return NULL;
@@ -102,20 +102,20 @@ int Threshold::GetMedianValueInBox(int xCentre, int yCentre, image_data& picture
 	return buff[buff.size() / 2];
 }
 
-void Edge::Apply(image_data& pictureData) {
-	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
-	stbi_uc val = 0;
-	image_data copiedPictureData = pictureData.DeepCopy();
-	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
-		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-			val = kernel.Apply(x, y, activeArea, copiedPictureData);
-			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
-				+ x * pictureData.compPerPixel;
-			p[colors::R] = val;
-			p[colors::G] = val;
-			p[colors::B] = val;
-		}
-	}
-	copiedPictureData.FreePixels();
-	return;
-}
+//void Edge::Apply(image_data& pictureData) {
+//	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
+//	stbi_uc val = 0;
+//	image_data copiedPictureData = pictureData.DeepCopy();
+//	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
+//		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
+//			val = kernel.Apply(x, y, activeArea, copiedPictureData);
+//			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
+//				+ x * pictureData.compPerPixel;
+//			p[colors::R] = val;
+//			p[colors::G] = val;
+//			p[colors::B] = val;
+//		}
+//	}
+//	copiedPictureData.FreePixels();
+//	return;
+//}
