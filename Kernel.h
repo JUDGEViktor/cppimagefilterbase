@@ -19,7 +19,7 @@ public:
 
 	~Kernel() {}
 
-	int Apply(int xCentre, int yCentre, active_rectangle& activeArea, image_data& pictureData);
+	stbi_uc Apply(int xCentre, int yCentre, active_rectangle& activeArea, image_data& pictureData);
 
 
 };
