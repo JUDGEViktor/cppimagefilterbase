@@ -71,7 +71,7 @@ void Threshold::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			int medValue = GetMedianValueInBox(x, y, pictureData/*copiedPictureData*/);
+			int medValue = GetMedianValueInBox(x, y, copiedPictureData);
 			if (p[colors::R] < medValue) {
 				p[colors::R] = 0;
 				p[colors::G] = 0;

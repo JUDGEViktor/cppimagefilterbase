@@ -1,8 +1,20 @@
 #pragma once
-#include "Definitions.h"
+//#include "Definitions.h"
 #include "png_toolkit.h"
-#include "Kernel.h"
+#include "Libraries.h"
+//#include "Kernel.h"
 
+using matrix = std::vector<std::vector<int>>;
+
+enum colors {
+	R,
+	G,
+	B
+};
+
+struct active_rectangle {
+	int upperLine, leftColumn, bottomLine, rightColumn;
+};
 
 enum class filters_type {
 	blackWhite,
