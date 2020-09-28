@@ -3,7 +3,8 @@
 filters_map filters = {
 	{"BlackWhite", filters_type::blackWhite},
 	{"Red", filters_type::red},
-	{"Threshold", filters_type::threshold}
+	{"Threshold", filters_type::threshold},
+	{"Edge", filters_type::edge}
 };
 
 bool Filter::IsInActiveArea(int x, int y) {
@@ -27,6 +28,8 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, ima
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::threshold):
 			return new Threshold(upperLine, leftColumn, bottomLine, rightColumn);
+		case(filters_type::edge):
+			return new Edge(upperLine, leftColumn, bottomLine, rightColumn);
 		}
 	}
 	return NULL;
@@ -68,7 +71,7 @@ void Threshold::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			int medValue = GetMedianValueInBox(x, y, 2, copiedPictureData);
+			int medValue = GetMedianValueInBox(x, y, copiedPictureData);
 			if (p[colors::R] < medValue) {
 				p[colors::R] = 0;
 				p[colors::G] = 0;
@@ -81,7 +84,7 @@ void Threshold::Apply(image_data& pictureData) {
 	return;
 }
 
-int Threshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
+int Threshold::GetMedianValueInBox(int xCentre, int yCentre, image_data& pictureData) {
 	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {
@@ -99,20 +102,20 @@ int Threshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_d
 	return buff[buff.size() / 2];
 }
 
-//void Edge::Apply(image_data& pictureData) {
-//	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
-//	stbi_uc val = 0;
-//	image_data copiedPictureData = pictureData.DeepCopy();
-//	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
-//		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-//			val = kernel.Apply(x, y, activeArea, copiedPictureData);
-//			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
-//				+ x * pictureData.compPerPixel;
-//			p[colors::R] = val;
-//			p[colors::G] = val;
-//			p[colors::B] = val;
-//		}
-//	}
-//	copiedPictureData.FreePixels();
-//	return;
-//}
+void Edge::Apply(image_data& pictureData) {
+	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
+	stbi_uc val = 0;
+	image_data copiedPictureData = pictureData.DeepCopy();
+	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
+		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
+			val = kernel.Apply(x, y, activeArea, copiedPictureData);
+			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
+				+ x * pictureData.compPerPixel;
+			p[colors::R] = val;
+			p[colors::G] = val;
+			p[colors::B] = val;
+		}
+	}
+	copiedPictureData.FreePixels();
+	return;
+}

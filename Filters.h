@@ -1,17 +1,9 @@
 #pragma once
 #include "Libraries.h"
 #include "png_toolkit.h"
-//include def and kernel
+#include "Definitions.h"
+#include "Kernel.h"
 
-enum colors {
-	R,
-	G,
-	B
-};
-
-struct active_rectangle {
-	int upperLine, leftColumn, bottomLine, rightColumn;
-};
 
 enum class filters_type {
 	blackWhite,
@@ -22,7 +14,7 @@ enum class filters_type {
 };
 
 
-typedef std::map<std::string, filters_type> filters_map;
+using filters_map = std::map<std::string, filters_type>;
 
 
 class Filter {
@@ -84,11 +76,13 @@ class Threshold : public Filter {
 
 private:
 
-	int GetMedianValueInBox(int x, int y, int radius, image_data& pictureData);
+	int radius;
+
+	int GetMedianValueInBox(int x, int y, image_data& pictureData);
 
 public:
 
-	Threshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
+	Threshold(int U, int L, int B, int R) : Filter(U, L, B, R) { radius = 2; }
 
 	~Threshold() {}
 
@@ -96,36 +90,36 @@ public:
 };
 
 
-//class Convolution : public Filter {
-//
-//protected:
-//
-//	Kernel kernel;
-//
-//public:
-//
-//	Convolution(int U, int L, int B, int R) : Filter(U, L, B, R), kernel({{ -1, -1, -1 },
-//																		  { -1,  9, -1 },
-//																		  { -1, -1, -1 }}) {}
-//
-//	~Convolution() {}
-//
-//	void Apply(image_data& pictureData) = 0;
-//
-//};
-//
-//
-//class Edge : public Convolution {
-//
-//private:
-//
-//
-//public:
-//
-//	Edge(int U, int L, int B, int R) : Convolution(U, L, B, R) {}
-//
-//	~Edge() {}
-//
-//	void Apply(image_data& pictureData);
-//
-//};
+class Convolution : public Filter {
+
+protected:
+
+	Kernel kernel;
+
+public:
+
+	Convolution(int U, int L, int B, int R) : Filter(U, L, B, R), kernel({{ -1, -1, -1 },
+																		  { -1,  9, -1 },
+																		  { -1, -1, -1 }}) {}
+
+	~Convolution() {}
+
+	void Apply(image_data& pictureData) = 0;
+
+};
+
+
+class Edge : public Convolution {
+
+private:
+
+
+public:
+
+	Edge(int U, int L, int B, int R) : Convolution(U, L, B, R) {}
+
+	~Edge() {}
+
+	void Apply(image_data& pictureData);
+
+};
