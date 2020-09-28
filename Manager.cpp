@@ -2,27 +2,20 @@
 
 void Manager::parseFile(char* fileConfigName) {
 	int tmp;
+	std::string filterName;
+	std::vector<int> curBoundaries;
 	std::ifstream configFile(fileConfigName);
 	if (!configFile.is_open())
 		return;
 	while (!configFile.eof()) {
-		std::string filterName;
-		std::vector<int> curBoundaries;
-		try {
-			configFile >> filterName;
-
-			int num;
-			for (int i = 0; i < 4; i++) {
-				configFile >> num;
-				curBoundaries.push_back(num);
-			}
-			filterAndArea.push_back(std::pair<std::string, std::vector<int>>(filterName, curBoundaries));
+		configFile >> filterName;
+		for (auto i = 0; i < 4; i++) {
+			configFile >> tmp;
+			curBoundaries.push_back(tmp);
 		}
-		catch (...) {
-			break;
-		}
+		filterAndArea.push_back(std::pair<std::string, std::vector<int>>(filterName, curBoundaries));
+		curBoundaries.clear();
 	}
-	configFile.close();
 }
 
 void Manager::initFilters(image_data& imageData) {

@@ -3,8 +3,8 @@
 filters_map filters = {
 	{"BlackWhite", filters_type::blackWhite},
 	{"Red", filters_type::red},
-	{"Threshold", filters_type::threshold},
-	{"Edge", filters_type::edge}
+	{"Threshold", filters_type::threshold}
+	//{"Edge", filters_type::edge}
 };
 
 bool Filter::IsInActiveArea(int x, int y) {
@@ -71,7 +71,7 @@ void Threshold::Apply(image_data& pictureData) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			int medValue = GetMedianValueInBox(x, y, copiedPictureData);
+			int medValue = GetMedianValueInBox(x, y, 2, copiedPictureData);
 			if (p[colors::R] < medValue) {
 				p[colors::R] = 0;
 				p[colors::G] = 0;
@@ -84,7 +84,7 @@ void Threshold::Apply(image_data& pictureData) {
 	return;
 }
 
-int Threshold::GetMedianValueInBox(int xCentre, int yCentre, image_data& pictureData) {
+int Threshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
 	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {

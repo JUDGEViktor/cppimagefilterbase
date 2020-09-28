@@ -4,7 +4,7 @@
 #include "Libraries.h"
 //#include "Kernel.h"
 
-typedef std::vector<std::vector<int>> matrix;
+//typedef std::vector<std::vector<int>> matrix;
 
 enum colors {
 	R,
@@ -86,13 +86,11 @@ class Threshold : public Filter {
 
 private:
 
-	int radius;
-
-	int GetMedianValueInBox(int x, int y, image_data& pictureData);
+	int GetMedianValueInBox(int x, int y, int radius, image_data& pictureData);
 
 public:
 
-	Threshold(int U, int L, int B, int R) : Filter(U, L, B, R) { radius = 2; }
+	Threshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
 
 	~Threshold() {}
 
