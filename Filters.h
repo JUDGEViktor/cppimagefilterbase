@@ -1,10 +1,7 @@
 #pragma once
-//#include "Definitions.h"
-#include "png_toolkit.h"
 #include "Libraries.h"
-//#include "Kernel.h"
-
-//typedef std::vector<std::vector<int>> matrix;
+#include "png_toolkit.h"
+//include def and kernel
 
 enum colors {
 	R,
@@ -54,6 +51,7 @@ public:
 	virtual void Apply(image_data& pictureData) = 0;
 
 };
+
 
 
 class BlackWhiteFilter : public Filter {

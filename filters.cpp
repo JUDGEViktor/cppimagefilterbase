@@ -4,11 +4,10 @@ filters_map filters = {
 	{"BlackWhite", filters_type::blackWhite},
 	{"Red", filters_type::red},
 	{"Threshold", filters_type::threshold}
-	//{"Edge", filters_type::edge}
 };
 
 bool Filter::IsInActiveArea(int x, int y) {
-	return(x > activeArea.leftColumn && x < activeArea.rightColumn && y > activeArea.upperLine && y < activeArea.bottomLine);
+	return(x > activeArea.leftColumn && x < activeArea.rightColumn&& y > activeArea.upperLine && y < activeArea.bottomLine);
 }
 
 
@@ -28,8 +27,6 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, ima
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::threshold):
 			return new Threshold(upperLine, leftColumn, bottomLine, rightColumn);
-		/*case(filters_type::edge):
-			return new Edge(upperLine, leftColumn, bottomLine, rightColumn);*/
 		}
 	}
 	return NULL;
