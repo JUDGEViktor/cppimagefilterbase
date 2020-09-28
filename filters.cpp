@@ -3,7 +3,7 @@
 filters_map filters = {
 	{"BlackWhite", filters_type::blackWhite},
 	{"Red", filters_type::red},
-	{"Treshold", filters_type::treshold}
+	{"Threshold", filters_type::threshold}
 };
 
 bool Filter::IsInActiveArea(int x, int y) {
@@ -25,8 +25,8 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, ima
 			return new BlackWhiteFilter(upperLine, leftColumn, bottomLine, rightColumn);
 		case (filters_type::red):
 			return new RedFilter(upperLine, leftColumn, bottomLine, rightColumn);
-		case (filters_type::treshold):
-			return new Treshold(upperLine, leftColumn, bottomLine, rightColumn);
+		case (filters_type::threshold):
+			return new Threshold(upperLine, leftColumn, bottomLine, rightColumn);
 		}
 	}
 	return NULL;
@@ -61,7 +61,7 @@ void RedFilter::Apply(image_data& pictureData) {
 	return;
 }
 
-void Treshold::Apply(image_data& pictureData) {
+void Threshold::Apply(image_data& pictureData) {
 	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
 	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
@@ -81,7 +81,7 @@ void Treshold::Apply(image_data& pictureData) {
 	return;
 }
 
-int Treshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
+int Threshold::GetMedianValueInBox(int xCentre, int yCentre, int radius, image_data& pictureData) {
 	std::vector<stbi_uc> buff;
 
 	for (auto y = yCentre - radius; y <= yCentre + radius; y++) {

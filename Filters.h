@@ -15,7 +15,7 @@ struct active_rectangle {
 enum class filters_type {
 	blackWhite,
 	red,
-	treshold,
+	threshold,
 	blur,
 	edge
 };
@@ -79,7 +79,7 @@ public:
 };
 
 
-class Treshold : public Filter {
+class Threshold : public Filter {
 
 private:
 
@@ -87,9 +87,9 @@ private:
 
 public:
 
-	Treshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
+	Threshold(int U, int L, int B, int R) : Filter(U, L, B, R) {}
 
-	~Treshold() {}
+	~Threshold() {}
 
 	void Apply(image_data& pictureData);
 };
