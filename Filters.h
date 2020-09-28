@@ -4,7 +4,7 @@
 #include "Libraries.h"
 //#include "Kernel.h"
 
-using matrix = std::vector<std::vector<int>>;
+typedef std::vector<std::vector<int>> matrix;
 
 enum colors {
 	R,
@@ -25,7 +25,7 @@ enum class filters_type {
 };
 
 
-using filters_map = std::map<std::string, filters_type>;
+typedef std::map<std::string, filters_type> filters_map;
 
 
 class Filter {
