@@ -114,9 +114,9 @@ void Edge::Apply(image_data& pictureData) {
 			val = kernel.Apply(x, y, colors::R, activeArea, copiedPictureData);
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
-			p[colors::R] = val;
-			p[colors::G] = val;
-			p[colors::B] = val;
+			p[colors::R] = stbi_uc(val);
+			p[colors::G] = stbi_uc(val);
+			p[colors::B] = stbi_uc(val);
 		}
 	}
 	copiedPictureData.FreePixels();
