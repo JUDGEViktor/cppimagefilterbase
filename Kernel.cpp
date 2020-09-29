@@ -3,6 +3,7 @@
 
 Kernel::Kernel(matrix setWeights) {
 	weights = setWeights;
+	sumWeights = 0;
 	for (auto i = 0; i < weights.size(); i++) {
 		for (auto j = 0; j < weights[i].size(); j++) {
 			sumWeights += weights[i][j];
