@@ -124,7 +124,6 @@ void Edge::Apply(image_data& pictureData) {
 }
 
 void Blur::Apply(image_data& pictureData) {
-	stbi_uc val = 0;
 	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
