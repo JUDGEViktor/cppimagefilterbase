@@ -107,7 +107,7 @@ int Threshold::GetMedianValueInBox(int xCentre, int yCentre, image_data& picture
 
 void Edge::Apply(image_data& pictureData) {
 	BlackWhiteFilter(activeArea.upperLine, activeArea.leftColumn, activeArea.bottomLine, activeArea.rightColumn).Apply(pictureData);
-	stbi_uc val = 0;
+	int val = 0;
 	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {

@@ -1,7 +1,7 @@
 #pragma once
 #include"Libraries.h"
 
-using matrix = std::vector<std::vector<double>>;
+using matrix = std::vector<std::vector<int>>;
 
 enum colors {
 	R,

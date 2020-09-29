@@ -13,8 +13,8 @@ Kernel::Kernel(matrix setWeights) {
 }
 
 
-stbi_uc Kernel::Apply(int xCentre, int yCentre, int color, active_rectangle& activeArea, image_data& pictureData) {
-	double res = 0;
+int Kernel::Apply(int xCentre, int yCentre, int color, active_rectangle& activeArea, image_data& pictureData) {
+	int res = 0;
 	int sumWeights = 0;
 	for (auto y = yCentre - radius, yMatrix = 0; y <= yCentre + radius; y++, yMatrix++) {
 		for (auto x = xCentre - radius, xMatrix = 0; x <= xCentre + radius; x++, xMatrix++) {
@@ -32,5 +32,5 @@ stbi_uc Kernel::Apply(int xCentre, int yCentre, int color, active_rectangle& act
 		res = 255;
 	else if (res < 0)
 		res = 0;
-	return (stbi_uc)res;
+	return res;
 }
