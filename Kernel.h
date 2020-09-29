@@ -9,7 +9,7 @@ private:
 
 	matrix weights;
 
-//	int sumWeights = 0;
+	int sumWeights = 0;
 
 	int radius;
 
