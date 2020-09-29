@@ -4,7 +4,8 @@ filters_map filters = {
 	{"BlackWhite", filters_type::blackWhite},
 	{"Red", filters_type::red},
 	{"Threshold", filters_type::threshold},
-	{"Edge", filters_type::edge}
+	{"Edge", filters_type::edge},
+	{"Blur", filters_type::blur}
 };
 
 bool Filter::IsInActiveArea(int x, int y) {
@@ -30,6 +31,8 @@ Filter* Filter::Create(std::string filterName, std::vector<int> coordinates, ima
 			return new Threshold(upperLine, leftColumn, bottomLine, rightColumn);
 		case(filters_type::edge):
 			return new Edge(upperLine, leftColumn, bottomLine, rightColumn);
+		case(filters_type::blur):
+			return new Blur(upperLine, leftColumn, bottomLine, rightColumn);
 		}
 	}
 	return NULL;
@@ -108,12 +111,28 @@ void Edge::Apply(image_data& pictureData) {
 	image_data copiedPictureData = pictureData.DeepCopy();
 	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
 		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
-			val = kernel.Apply(x, y, activeArea, copiedPictureData);
+			val = kernel.Apply(x, y, colors::R, activeArea, copiedPictureData);
 			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 				+ x * pictureData.compPerPixel;
 			p[colors::R] = val;
 			p[colors::G] = val;
 			p[colors::B] = val;
+		}
+	}
+	copiedPictureData.FreePixels();
+	return;
+}
+
+void Blur::Apply(image_data& pictureData) {
+	stbi_uc val = 0;
+	image_data copiedPictureData = pictureData.DeepCopy();
+	for (auto y = activeArea.upperLine; y < activeArea.bottomLine; y++) {
+		for (auto x = activeArea.leftColumn; x < activeArea.rightColumn; x++) {
+			unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
+				+ x * pictureData.compPerPixel;
+			p[colors::R] = kernel.Apply(x, y, colors::R, activeArea, copiedPictureData);
+			p[colors::G] = kernel.Apply(x, y, colors::G, activeArea, copiedPictureData);
+			p[colors::B] = kernel.Apply(x, y, colors::B, activeArea, copiedPictureData);
 		}
 	}
 	copiedPictureData.FreePixels();

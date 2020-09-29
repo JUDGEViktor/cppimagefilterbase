@@ -12,7 +12,7 @@ Kernel::Kernel(matrix setWeights) {
 }
 
 
-stbi_uc Kernel::Apply(int xCentre, int yCentre, active_rectangle& activeArea, image_data& pictureData) {
+stbi_uc Kernel::Apply(int xCentre, int yCentre, int color, active_rectangle& activeArea, image_data& pictureData) {
 	int res = 0;
 	for (auto y = yCentre - radius, yMatrix = 0; y <= yCentre + radius; y++, yMatrix++) {
 		for (auto x = xCentre - radius, xMatrix = 0; x <= xCentre + radius; x++, xMatrix++) {
@@ -20,7 +20,7 @@ stbi_uc Kernel::Apply(int xCentre, int yCentre, active_rectangle& activeArea, im
 				y > activeArea.upperLine && y < activeArea.bottomLine) {
 				unsigned char* p = pictureData.pixels + y * pictureData.w * pictureData.compPerPixel
 					+ x * pictureData.compPerPixel;
-				res += weights[yMatrix][xMatrix] * p[colors::R];
+				res += weights[yMatrix][xMatrix] * p[color];
 			}
 		}
 	}
